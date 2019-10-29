@@ -1,5 +1,4 @@
 require_relative 'git_cli'
-require 'pry-byebug'
 
 class Gcoms
   def initialize(options)
@@ -7,8 +6,8 @@ class Gcoms
   end
   
   def list_commits
-    GitCLI.clone(@options[:url], @options[:branch]) do |repo_path|
-      GitCLI.log(repo_path, @options[:page], @options[:per_page])
-    end
+    client = GitCLI.new(@options[:url], @options[:branch])
+    client.clone
+    client.log(@options[:page], @options[:per_page])
   end
 end
