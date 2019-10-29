@@ -1,0 +1,76 @@
+AllCops:
+  Exclude:
+    - spec/**/*
+    - Gemfile
+
+FrozenStringLiteralComment:
+  Enabled: false
+
+Naming/UncommunicativeMethodParamName:
+  Enabled: true
+  MinNameLength: 2
+
+Rails:
+  Enabled: true
+
+Rails/ActionFilter:
+  Enabled: true
+
+Rails/HasAndBelongsToMany:
+  Enabled: true
+  Severity: refactor
+
+Rails/FindBy:
+  Enabled: true
+
+Rails/ApplicationRecord:
+  Enabled: false
+
+Metrics/BlockNesting:
+  Max: 6
+
+Metrics/ClassLength:
+  Max: 680
+
+Metrics/ModuleLength:
+  Max: 200
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 64
+
+Metrics/ParameterLists:
+  Max: 12
+  CountKeywordArgs: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/DoubleNegation:
+ Enabled: false
+
+Style/SignalException:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/RescueModifier:
+  Enabled: false
