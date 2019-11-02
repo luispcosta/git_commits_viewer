@@ -1,26 +1,15 @@
 require 'optparse'
+require_relative 'gcoms_options'
 
 class OptionsParser
-  DEFAULT_PAGE = 1
-  DEFAULT_PER_PAGE = 100
-  DEFAULT_BRANCH = 'master'.freeze
-
-  InvalidOption = Class.new(StandardError)
-
-  GITHUB_URL_REGEXP = /((git@|http(s)?:\/\/)([\w\.@]+)(\/|:))([\w,\-,\_]+)\/([\w,\-,\_]+)(.git){0,1}((\/){0,1})/.freeze
-
+  extend GcomsOptions
   class << self
     def parse!(args)
-      options = {
-        page: DEFAULT_PAGE,
-        per_page: DEFAULT_PER_PAGE,
-        url: nil,
-        branch: DEFAULT_BRANCH
-      }
+      options = GcomsOptions::DEFAULT_OPTS.clone
 
       OptionParser.new do |opts|
         opts.banner = 'Usage: ruby gcoms.rb [options]'
-        opts.separator 'Example: ruby gcoms.rb --url=https://github.com/rails -p=2 -l=10 --branch=somebranch'
+        opts.separator 'Example: ruby gcoms.rb --url=git://github.com/rails/rails.git -p=2 -l=10 --branch=somebranch'
         opts.separator ''
         
         opts.on("-pPAGE", "--page=PAGE", Integer, "Prints the commit list starting from this specific page. Defaults to #{DEFAULT_PAGE}") do |p|
@@ -48,23 +37,7 @@ class OptionsParser
 
       end.parse!(args)
 
-      check_required_arguments!(options)
-      options
-    end
-
-    private
-
-    def validate_github_url(url)
-      raise InvalidOption, "Url #{url} is not a valid github url. See the help section with the --help option." if url&.empty?
-      url = url.strip.chomp
-
-      return url if url.match?(GITHUB_URL_REGEXP)
-
-      raise InvalidOption, "Url #{url} is not a valid github url. See the help section with the --help option."
-    end
-
-    def check_required_arguments!(options)
-      raise OptionParser::MissingArgument, "Github URL was not provided" if options[:url].nil? || options[:url].empty?
+      check_required_arguments(options)
     end
   end
 end

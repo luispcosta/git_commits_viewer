@@ -1,4 +1,3 @@
-require 'pry-byebug'
 require_relative 'lib/options_parser'
 require_relative 'lib/gcoms'
 
@@ -11,3 +10,5 @@ rescue StandardError => e
 end
 
 puts Gcoms.new(options).list_commits
+
+

@@ -1,4 +1,5 @@
 require_relative 'repo_branch_cache'
+require 'open3'
 
 class GitCLI
   def initialize(url, branch)
@@ -16,6 +17,11 @@ class GitCLI
     skip = ((page <= 0 ? 2 : page) - 1) * per_page
     res = `cd #{repo_cache.cache_folder} && git log --skip=#{skip} --max-count=#{per_page} --pretty=format:'{%n  "commit": "%H",%n  "author": "%aN <%aE>",%n  "date": "%ad",%n  "message": "%f"%n},' $@ | perl -pe 'BEGIN{print "["}; END{print "]\n"}' | perl -pe 's/},]/}]/'`
     JSON.load(res)
+  end
+
+  def self.repo_exists?(url)
+    _, err, _ = Open3.capture3("git ls-remote #{url}")
+    err.empty?
   end
 
   private
