@@ -1,3 +1,5 @@
+# frozen_string_literal:true
+
 require 'sinatra'
 
 require_relative 'lib/api/params'
@@ -19,7 +21,7 @@ if ARGV.any?
     set :port, ARGV.first.to_i
   else
     puts "Unrecognized arguments #{ARGV}. If you wish to run this API on a different port, please run ruby.rb api PORT"
-    exit -1
+    exit - 1
   end
 end
 
@@ -42,4 +44,3 @@ end
 not_found do
   'Page not found'
 end
-

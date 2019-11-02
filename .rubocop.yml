@@ -1,30 +1,12 @@
 AllCops:
+  TargetRubyVersion: 2.6.3
   Exclude:
     - spec/**/*
     - Gemfile
 
-FrozenStringLiteralComment:
-  Enabled: false
-
 Naming/UncommunicativeMethodParamName:
   Enabled: true
   MinNameLength: 2
-
-Rails:
-  Enabled: true
-
-Rails/ActionFilter:
-  Enabled: true
-
-Rails/HasAndBelongsToMany:
-  Enabled: true
-  Severity: refactor
-
-Rails/FindBy:
-  Enabled: true
-
-Rails/ApplicationRecord:
-  Enabled: false
 
 Metrics/BlockNesting:
   Max: 6

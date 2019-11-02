@@ -1,9 +1,12 @@
+# frozen_string_literal:true
+
 require 'fileutils'
 
 module Utils
+  # Class that representing a cache of a local cloned git repository.
   class RepoBranchCache
     CACHE_TTL = 600 # 15 minutes, or 900 seconds
-    TMP_FOLDER = 'tmp'.freeze
+    TMP_FOLDER = 'tmp'
 
     def initialize(repo_name, branch)
       @repo_name = repo_name
@@ -38,7 +41,9 @@ module Utils
     attr_reader :repo_name, :branch
 
     def cache_folder_exists?
-      Dir.exist?(TMP_FOLDER) && Dir.exist?("#{TMP_FOLDER}/#{repo_name}") && Dir.exist?("#{TMP_FOLDER}/#{repo_name}/#{branch}")
+      Dir.exist?(TMP_FOLDER) &&
+        Dir.exist?("#{TMP_FOLDER}/#{repo_name}") &&
+        Dir.exist?("#{TMP_FOLDER}/#{repo_name}/#{branch}")
     end
   end
 end

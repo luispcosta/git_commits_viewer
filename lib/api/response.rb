@@ -1,4 +1,7 @@
+# frozen_string_literal:true
+
 module API
+  # Class to build API json responses
   class Response
     def self.ok(payload)
       {

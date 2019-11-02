@@ -1,8 +1,11 @@
+# frozen_string_literal:true
+
 require_relative 'repo_branch_cache'
 require 'open3'
 require 'json'
 
 module Utils
+  # Class to interact with the system's git command.
   class GitCLI
     def initialize(url, branch)
       @url = url
@@ -17,12 +20,14 @@ module Utils
 
     def log(page, per_page)
       skip = ((page <= 0 ? 2 : page) - 1) * per_page
+      # rubocop:disable Metrics/LineLength
       res = `cd #{repo_cache.cache_folder} && git log --skip=#{skip} --max-count=#{per_page} --pretty=format:'{%n  "commit": "%H",%n  "author": "%aN <%aE>",%n  "date": "%ad",%n  "message": "%f"%n},' $@ | perl -pe 'BEGIN{print "["}; END{print "]\n"}' | perl -pe 's/},]/}]/'`
-      ::JSON.load(res)
+      # rubocop:enable Metrics/LineLength
+      ::JSON.parse(res)
     end
 
     def self.repo_exists?(url)
-      _, err, _ = Open3.capture3("git ls-remote #{url}")
+      _, err, = Open3.capture3("git ls-remote #{url}")
       err.empty?
     end
 
@@ -31,7 +36,7 @@ module Utils
     attr_reader :url, :branch
 
     def repo_name(url)
-      url.split("/")[-1].split(".git")[0]
+      url.split('/')[-1].split('.git')[0]
     end
 
     def with_local_cache_repo_repo

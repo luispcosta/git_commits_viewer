@@ -1,6 +1,9 @@
+# frozen_string_literal:true
+
 require_relative '../utils/gcoms_options'
 
 module API
+  # Class to handle the params passed via the API endpoints.
   class Params
     extend Utils::GcomsOptions
 
@@ -9,14 +12,19 @@ module API
 
       if params[:page]
         page = Integer(params[:page]) rescue nil
-        raise Utils::GcomsOptions::InvalidOption, "Page must be greater than or equal to 1" if page && page < 0
+        raise Utils::GcomsOptions::InvalidOption, 'Page must be greater than or equal to 1' if page&.negative?
+
         options[:page] = page if page
       end
 
       if params[:per_page]
         per_page = Integer(params[:per_page]) rescue nil
-        raise Utils::GcomsOptions::InvalidOption, "Per page must be greater than or equal to 1" if per_page && per_page < 0
-        raise Utils::GcomsOptions::InvalidOption, "Per page must lower than or equal to #{Utils::GcomsOptions::MAX_PER_PAGE}" if per_page && per_page > Utils::GcomsOptions::MAX_PER_PAGE
+        raise Utils::GcomsOptions::InvalidOption, 'Per page must be greater than or equal to 1' if per_page&.negative?
+
+        max_per_page = Utils::GcomsOptions::MAX_PER_PAGE
+        if per_page && per_page > max_per_page
+          raise Utils::GcomsOptions::InvalidOption, "Per page must lower than or equal to #{max_per_page}"
+        end
 
         options[:per_page] = per_page if per_page
       end
