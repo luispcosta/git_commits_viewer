@@ -8,6 +8,21 @@ require_relative 'lib/cli/git_commits'
 require_relative 'lib/utils/gcoms_options'
 require_relative 'lib/github_api'
 
+def valid_port_number?(arg)
+  Integer(arg)
+rescue StandardError
+  false
+end
+
+if ARGV.any?
+  if ARGV.size == 1 && valid_port_number?(ARGV.first)
+    set :port, ARGV.first.to_i
+  else
+    puts "Unrecognized arguments #{ARGV}. If you wish to run this API on a different port, please run ruby.rb api PORT"
+    exit -1
+  end
+end
+
 get '/commits' do
   content_type :json
 
@@ -27,3 +42,4 @@ end
 not_found do
   'Page not found'
 end
+
