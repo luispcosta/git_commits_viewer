@@ -1,24 +1,27 @@
 require 'sinatra'
-require_relative 'lib/api_params'
-require_relative 'lib/gcoms_options'
-require_relative 'lib/gcoms'
-require_relative 'lib/api_response'
+
+require_relative 'lib/api/params'
+require_relative 'lib/api/response'
+
+require_relative 'lib/cli/git_commits'
+
+require_relative 'lib/utils/gcoms_options'
 require_relative 'lib/github_api'
 
 get '/commits' do
   content_type :json
 
-  options = ApiParams.parse(params)
+  options = API::Params.parse(params)
   client = GithubAPI.new(options)
-  ApiResponse.ok(client.list_commits)
-rescue GcomsOptions::InvalidOption => e
+  API::Response.ok(client.list_commits)
+rescue Utils::GcomsOptions::InvalidOption => e
   status 400
-  ApiResponse.error(e.message)
+  API::Response.error(e.message)
 rescue GithubAPI::Error
-  ApiResponse.ok(Gcoms.new(options).list_commits)
+  API::Response.ok(CLI::GitCommits.new(options).list)
 rescue StandardError => e
   status 400
-  ApiResponse.error(e.message)
+  API::Response.error(e.message)
 end
 
 not_found do

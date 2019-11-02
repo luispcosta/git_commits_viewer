@@ -1,14 +1,13 @@
-require_relative 'lib/options_parser'
-require_relative 'lib/gcoms'
+require_relative 'lib/cli/options_parser'
+require_relative 'lib/cli/git_commits'
 
-options = {}
 begin
-  options = OptionsParser.parse!(ARGV)
+  options = CLI::OptionsParser.parse!(ARGV)
+  puts CLI::GitCommits.new(options).list
 rescue StandardError => e
   puts "Unexpected error: #{e}"
   exit 1
 end
 
-puts Gcoms.new(options).list_commits
 
 

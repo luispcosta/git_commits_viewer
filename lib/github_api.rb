@@ -1,5 +1,4 @@
 require 'http'
-require_relative 'gcoms_options'
 
 class GithubAPI
   TIMEOUT_WAIT_SECONDS = 15
