@@ -1,9 +1,9 @@
 require 'http'
+require_relative 'gcoms_options'
 
 class GithubAPI
   TIMEOUT_WAIT_SECONDS = 15
 
-  class Timeout < StandardError; end
   class Error < StandardError; end
 
   def initialize(opts)

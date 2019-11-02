@@ -4,6 +4,7 @@ module GcomsOptions
   DEFAULT_PAGE = 1
   DEFAULT_PER_PAGE = 100
   DEFAULT_BRANCH = 'master'.freeze
+  MAX_PER_PAGE = 1000
 
   InvalidOption = Class.new(StandardError)
 

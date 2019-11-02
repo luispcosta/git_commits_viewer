@@ -14,7 +14,7 @@ get '/commits' do
 rescue GcomsOptions::InvalidOption => e
   status 400
   ApiResponse.error(e.message)
-rescue GithubAPI::Timeout, GithubAPI::Error
+rescue GithubAPI::Error
   ApiResponse.ok(Gcoms.new(options).list_commits)
 rescue StandardError => e
   status 400

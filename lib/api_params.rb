@@ -16,6 +16,8 @@ class ApiParams
     if params[:per_page]
       per_page = Integer(params[:per_page]) rescue nil
       raise GcomsOptions::InvalidOption, "Per page must be greater than or equal to 1" if per_page && per_page < 0
+      raise GcomsOptions::InvalidOption, "Per page must lower than or equal to #{GcomsOptions::MAX_PER_PAGE}" if per_page && per_page > GcomsOptions::MAX_PER_PAGE
+
       options[:per_page] = per_page if per_page
     end
 

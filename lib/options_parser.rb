@@ -13,10 +13,15 @@ class OptionsParser
         opts.separator ''
         
         opts.on("-pPAGE", "--page=PAGE", Integer, "Prints the commit list starting from this specific page. Defaults to #{DEFAULT_PAGE}") do |p|
+          raise GcomsOptions::InvalidOption, "Page must be greater than or equal to 1" if p && p < 0
+
           options[:page] = p
         end
       
         opts.on('-lPER_PAGE', '--per-page=PER_PAGE', Integer, "Number of commits to print per page. Defaults to #{DEFAULT_PER_PAGE}") do |per_page|
+          raise GcomsOptions::InvalidOption, "Per page must be greater than or equal to 1" if per_page && per_page < 0
+         raise GcomsOptions::InvalidOption, "Per page must lower than or equal to #{GcomsOptions::MAX_PER_PAGE}" if per_page && per_page > GcomsOptions::MAX_PER_PAGE
+
           options[:per_page] = per_page
         end
 
