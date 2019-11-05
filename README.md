@@ -80,3 +80,12 @@ If you wish to run the API on a different port, please run (subtitute PORT with 
 ```
 ruby api.rb PORT
 ```
+
+## Possible improvements
+
+* Add more tests (we should create a test for the github api abstraction, probably using [VCR](https://github.com/vcr/vcr) to store github API responses)
+* Add possibility to configure the fields we'd like to see for each commit.
+  * Right now the list of fields is static (check the value given to the `--pretty=format` option inside `Utils::GitCLI`)
+  * For this to work, we'd have to first sanitize the commit fields given by the user and then interpolate those into the git log call
+* Accept more github URLs. Right now we only accept urls with the `git://` protocol to avoid the need to have to provide a username and password
+  * Using [github tokens](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line), we could [accept urls with https or even http](https://stackoverflow.com/questions/18935539/authenticate-with-github-using-a-token). 
