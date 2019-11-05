@@ -23,8 +23,8 @@ describe Utils::GitCLI do
 
     context 'with commits' do
       before do
-        `cd repo_test && touch README1.md && git add . && git commit -m 'initial commit 1'`
-        `cd repo_test && touch README2.md && git add . && git commit -m 'commit 2'`
+        `touch repo_test/README1.md && cd repo_test && git add . && git commit -m 'initial commit 1'`
+        `touch repo_test/README2.md && cd repo_test && git add . && git commit -m 'commit 2'`
       end 
 
       it 'should get all the commits' do
