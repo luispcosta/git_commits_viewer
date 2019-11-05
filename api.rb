@@ -5,9 +5,9 @@ require 'sinatra'
 require_relative 'lib/api/params'
 require_relative 'lib/api/response'
 
-require_relative 'lib/cli/git_commits'
-
 require_relative 'lib/utils/gcoms_options'
+require_relative 'lib/utils/git_cli'
+
 require_relative 'lib/github_api'
 
 def valid_port_number?(arg)
@@ -35,7 +35,9 @@ rescue Utils::GcomsOptions::InvalidOption => e
   status 400
   API::Response.error(e.message)
 rescue GithubAPI::Error
-  API::Response.ok(CLI::GitCommits.new(options).list)
+  cli = Utils::GitCLI.new(options)
+  cli.clone
+  API::Response.ok(cli.log)
 rescue StandardError => e
   status 400
   API::Response.error(e.message)
