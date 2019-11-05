@@ -59,6 +59,14 @@ module CLI
         end
       end
 
+      def order_explanation
+        <<-HEREDOC
+          Order to list the commits. Possible values are: 'asc' or 'desc'. By default, #{DEFAULT_COMMIT_ORDER} is used.
+          'asc' means the commits are shown starting from the oldest commit. 'desc' means the commits are shown starting
+          from the most recent commit first.
+        HEREDOC
+      end
+
       def page_explanation
         <<-HEREDOC
           Prints the commit list starting from this specific page.

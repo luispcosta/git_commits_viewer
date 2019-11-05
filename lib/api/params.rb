@@ -8,7 +8,7 @@ module API
     extend Utils::GcomsOptions
 
     def self.parse(params)
-      options = Utils::GcomsOptions::DEFAULT_OPTS.clone
+      options = Utils::GcomsOptions::DEFAULT_OPTS.dup
 
       if params[:page]
         page = Integer(params[:page]) rescue nil

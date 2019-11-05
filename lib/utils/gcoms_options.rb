@@ -10,7 +10,7 @@ module Utils
 
     InvalidOption = Class.new(StandardError)
 
-    GITHUB_URL_REGEXP = %r{((git:\/\/)([\w\.@]+)(\/|:))([\w,\-,\_]+)\/([\w,\-,\_]+)(.git){0,1}((\/){0,1})}.freeze
+    GITHUB_URL_REGEXP = %r{((git:\/\/)([\w\.@]+)(\/|:))([\w,\-,\_]+)\/([\w,\-,\_]+)(.git){1}((\/){0,1})}.freeze
 
     DEFAULT_OPTS = {
       page: DEFAULT_PAGE,
@@ -20,15 +20,15 @@ module Utils
     }.freeze
 
     def validate_github_url(url)
-      raise InvalidOption, "Url #{url} is not a valid github url." if url&.empty?
+      raise InvalidOption, "Url #{url} is not a valid github url." if url.nil? || url&.empty?
 
-      url = url.strip.chomp
+      url = url.strip.chomp.downcase
 
       err = "Url #{url} is not a valid github url Expected format: git://github.com/rails/rails.git"
       raise InvalidOption, err unless url.match?(GITHUB_URL_REGEXP)
 
       err = "Url #{url} does not point to a valid github repository"
-      raise InvalidOption, err unless Utils::GitCLI.repo_exists?(url)
+      raise InvalidOption, err unless Utils::GitCLI.new(url: url).repo_exists?
 
       url
     end
