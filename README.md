@@ -7,7 +7,7 @@ The github url provided MUST respect the following format:
 
 `git://github.com/_owner_/_reponame_.git`
 
-Any other URL format will not be accepted. We only accept urls using the `git` protocol to avoid the need to provide a username and password when requesting the repository information.
+Any other URL format will not be accepted. This is because using the `git` protocol avoids the need to provide a username and password when cloning the repository (at the expense of the cloned repository being read-only repository, which is fine for the use case of this project).
 
 ## Requirements
 
@@ -21,7 +21,7 @@ In order to run this program, you need the following software installed in your 
 
 ## Installation
 
-After verifying that you have all the required software installed in your machine, `cd` into the directory where you have downloaded the project to.
+After verifying that you have all the required software installed in your machine, `cd` into the directory where you have downloaded the project to and run:
 
 ```
 bundle install
@@ -33,8 +33,6 @@ There are two modes of usage: using the `cli` script or running a local `api`.
 
 
 ### CLI mode
-
-You can invoke the `cli` script to list the commits of a repository in your command line.
 
 Example:
 
